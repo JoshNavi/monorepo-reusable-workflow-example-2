@@ -5,22 +5,34 @@ on:
     branches: main
 
 jobs:
+    # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      # Expose matched filters as job 'packages' output variable
+      packages: ${{ steps.filter.outputs.changes }}
+    steps:
+    # For pull requests it's not necessary to checkout the code
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          package-a: package-a
+          package-b: package-b
+          package-c: package-c
+          package-d: package-d
+
   call-workflow:
-    name: Build App (${{ matrix.name }})
+    needs: changes
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: package-a
-          - name: package-b
-          - name: package-c
-          - name: package-d
+        # Parse JSON array containing names of all filters matching any of changed files
+        name: ${{ fromJSON(needs.changes.outputs.packages) }}
+    name: Build App (${{ matrix.name }})
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      # - uses: filter or whatever
-
       - uses: ./.github/actions/build
         with:
           name: ${{ matrix.name }}
