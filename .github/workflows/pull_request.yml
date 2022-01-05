@@ -17,10 +17,10 @@ jobs:
       id: filter
       with:
         filters: |
-          package-a: package-a
-          package-b: package-b
-          package-c: package-c
-          package-d: package-d
+          package-a: 'package-a/**'
+          package-b: 'package-b/**'
+          package-c: 'package-c/**'
+          package-d: 'package-d/**'
 
   call-workflow:
     needs: changes
