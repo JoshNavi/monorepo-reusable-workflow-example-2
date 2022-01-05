@@ -1,0 +1,19 @@
+name: Build
+
+inputs:
+  name:
+    description: Package name
+    type: string
+    required: true
+
+runs:
+  using: composite
+  steps:
+    steps:
+      - id: step-1
+        run: echo "$NAME"
+        env:
+          NAME: ${{ inputs.name }}
+
+      - id: step-2
+        run: echo "done"

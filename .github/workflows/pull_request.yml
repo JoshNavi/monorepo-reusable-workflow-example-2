@@ -1,0 +1,26 @@
+name: Build Pull Request
+
+on:
+  pull_request:
+    branches: main
+
+jobs:
+  call-workflow:
+    name: Build App (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: package-a
+          - name: package-b
+          - name: package-c
+          - name: package-d
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # - uses: filter or whatever
+
+      - uses: ./.github/actions/build
+        with:
+          name: ${{ matrix.name }}
