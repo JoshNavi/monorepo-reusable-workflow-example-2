@@ -13,6 +13,8 @@ runs:
       run: echo "$NAME"
       env:
         NAME: ${{ inputs.name }}
+      shell: bash
 
     - id: step-2
       run: echo "done"
+      shell: bash
