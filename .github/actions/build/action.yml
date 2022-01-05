@@ -9,11 +9,10 @@ inputs:
 runs:
   using: composite
   steps:
-    steps:
-      - id: step-1
-        run: echo "$NAME"
-        env:
-          NAME: ${{ inputs.name }}
+    - id: step-1
+      run: echo "$NAME"
+      env:
+        NAME: ${{ inputs.name }}
 
-      - id: step-2
-        run: echo "done"
+    - id: step-2
+      run: echo "done"
